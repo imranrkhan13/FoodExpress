@@ -48,7 +48,7 @@ A modern and responsive restaurant browsing and food ordering web application bu
 
 ### 1. Clone the Project
 ```bash
-git clone <repo-url>
+git clone imranrkhan13/FoodExpress
 cd FoodExpress
 ```
 
