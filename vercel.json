@@ -5,7 +5,13 @@
     { "src": "frontend/dist/**", "use": "@vercel/static" }
   ],
   "routes": [
+    // 1. Explicitly check for static files first
+    { "handle": "filesystem" }, 
+    
+    // 2. API Route
     { "src": "/api/(.*)", "dest": "backend/src/server.ts" },
-    { "src": "/(.*)", "dest": "/frontend/dist/index.html" }
+    
+    // 3. Frontend Catch-All (SPA fallback)
+    { "src": "/(.*)", "dest": "/frontend/dist/index.html" } 
   ]
 }
