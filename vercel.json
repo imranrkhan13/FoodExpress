@@ -14,13 +14,10 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-
     {
       "src": "/api/(.*)",
       "dest": "backend/src/server.ts"
     },
-
     {
       "src": "/(.*)",
       "dest": "frontend/dist/index.html"
