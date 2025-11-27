@@ -4,7 +4,7 @@ import { getRestaurantById } from "../api/restaurantApi";
 import { Restaurant } from "../types/restaurant";
 import { ArrowLeft } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import toast from "react-hot-toast";
+import Navbar from "../components/Navbar";
 
 const RestaurantPage = () => {
   const { id } = useParams();
@@ -73,7 +73,7 @@ const RestaurantPage = () => {
           </p>
         </div>
 
-        {/* ⭐ MENU SECTION */}
+        {/*  MENU SECTION */}
         <div className="mt-12">
           <h2 className="text-3xl font-bold mb-6">Menu</h2>
 
@@ -82,16 +82,16 @@ const RestaurantPage = () => {
               <h3 className="text-2xl font-semibold mb-4">{cat.category}</h3>
 
               {cat.items.map((item, j) => (
-                <div key={j} className="bg-white/5 p-4 rounded-xl mb-3 flex gap-4 justify-between">
-                  <div className="flex gap-4">
+                <div className="bg-white/5 p-4 rounded-xl mb-3 flex gap-4 justify-between relative">
+                  <div className="flex gap-4 flex-1">
                     {item.image && (
-                      <img src={item.image} className="w-20 h-20 rounded object-cover" />
+                      <img src={item.image} className="w-24 h-24 rounded-lg object-cover shadow-lg" />
                     )}
 
-                    <div>
+                    <div className="flex-1">
                       <p className="text-xl font-semibold">{item.name}</p>
-                      <p className="text-gray-300">{item.description}</p>
-                      <p className="text-orange-400 font-bold">₹{item.price}</p>
+                      <p className="text-gray-400 text-sm mt-1">{item.description}</p>
+                      <p className="text-orange-400 font-bold text-lg mt-2">₹{item.price}</p>
                     </div>
                   </div>
 
@@ -100,26 +100,65 @@ const RestaurantPage = () => {
                       addToCart(item);
                       const el = document.getElementById("bubble-" + item.name);
                       if (el) {
-                        el.classList.remove("opacity-0");
-                        el.classList.add("opacity-100");
-                        setTimeout(() => el.classList.add("opacity-0"), 700);
+                        el.style.display = "flex";
+                        setTimeout(() => {
+                          el.style.opacity = "1";
+                          el.style.transform = "scale(1)";
+                        }, 10);
+                        setTimeout(() => {
+                          el.style.opacity = "0";
+                          el.style.transform = "scale(0.8)";
+                        }, 1500);
+                        setTimeout(() => {
+                          el.style.display = "none";
+                        }, 1800);
                       }
                     }}
-                    className="relative bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold 
-                    px-6 py-2 rounded-full shadow-lg hover:shadow-orange-500/40 
-                    hover:-translate-y-0.5 active:scale-95 transition-all"
+                    className="flex-shrink-0 bg-gradient-to-br from-orange-500 to-red-600 
+                              text-white font-bold px-6 py-3 rounded-xl h-fit
+                              hover:shadow-2xl hover:shadow-orange-500/40 hover:scale-105
+                              active:scale-95 transition-all duration-300
+                              border-2 border-orange-400/30
+                              group"
                   >
-                    + Add
-                    <span
-                      id={"bubble-" + item.name}
-                      className="absolute -top-3 -right-3 bg-green-500 text-white text-xs px-2 py-1 
-               rounded-full opacity-0 transition-opacity duration-300"
-                    >
-                      Added!
+                    {/* Animated shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                    translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 rounded-xl"></div>
+
+                    <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
+                      <svg
+                        className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                      </svg>
+                      ADD
                     </span>
                   </button>
 
-
+                  {/* Success notification - positioned at top right of the entire card */}
+                  <div
+                    id={"bubble-" + item.name}
+                    className="absolute -top-3 -right-3
+               bg-gradient-to-br from-green-400 to-green-600
+               text-white text-sm font-bold
+               px-4 py-2 rounded-full
+               shadow-2xl shadow-green-500/60
+               items-center gap-2 z-50 whitespace-nowrap"
+                    style={{
+                      display: 'none',
+                      opacity: '0',
+                      transform: 'scale(0.8)',
+                      transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                    }}
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    ADDED!
+                  </div>
                 </div>
               ))}
 
