@@ -11,16 +11,8 @@ const Navbar = () => {
 
   return (
     <header
-      className="
-        sticky top-0 z-50
-        backdrop-blur-lg
-        bg-black/40
-        border-b border-orange-500/20
-        px-4 py-3    /* mobile fix */
-      "
-    >
+      className="sticky top-0 z-50 backdrop-blur-lg bg-black/40 border-b border-orange-500/20 px-4 py-3">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
-
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <div className="relative">
@@ -55,7 +47,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
 
           {/* Login */}
-          <button
+          {/* <button
             onClick={() => navigate("/login")}
             className="
               hidden md:block
@@ -69,7 +61,7 @@ const Navbar = () => {
             "
           >
             Login
-          </button>
+          </button> */}
 
           {/* Order Now */}
           <button

@@ -4,7 +4,6 @@ import { getRestaurantById } from "../api/restaurantApi";
 import { Restaurant } from "../types/restaurant";
 import { ArrowLeft } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import Navbar from "../components/Navbar";
 
 const RestaurantPage = () => {
   const { id } = useParams();

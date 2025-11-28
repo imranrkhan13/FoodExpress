@@ -74,15 +74,16 @@ const CartPage = () => {
           {/* Checkout Button */}
           <button
             onClick={() => navigate("/checkout")}
-            className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-bold w-full mt-4 text-white text-lg"
+            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2 group"
           >
-            Proceed to Checkout
+            <span>Proceed to Checkout</span>
+            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
           </button>
 
           {/* CLEAR CART */}
           <button
             onClick={clearCart}
-            className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg mt-6 font-bold w-full"
+            className="w-full bg-gray-100 hover:bg-red-50 text-red-600 hover:text-red-700 font-semibold py-3 px-6 rounded-xl border-2 border-gray-200 hover:border-red-300 transition-all duration-200"
           >
             Clear Cart
           </button>
@@ -91,5 +92,5 @@ const CartPage = () => {
     </div>
   );
 };
-
+  
 export default CartPage;
