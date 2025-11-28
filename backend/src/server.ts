@@ -1,36 +1,31 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { connectDatabase } from './utils/database';
 import restaurantRoutes from './routes/restaurantRoutes';
 
+
+
 const app: Application = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors()); // Enable CORS for all routes
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Routes
 app.use('/api/restaurants', restaurantRoutes);
 
-// Health check route - Ensure DB connection is handled here or globally if possible
-// We will call connectDatabase to ensure a connection is established before serving the health check
-app.get('/api/health', async (req: Request, res: Response) => {
-  try {
-    // Attempt to connect/verify connection status before response
-    await connectDatabase(); 
-    res.status(200).json({
-      success: true,
-      message: 'Server is running and DB is connected',
-      timestamp: new Date().toISOString(),
-    });
-  } catch (error) {
-     res.status(500).json({
-      success: false,
-      message: 'Server is running but DB connection failed',
-      error: error instanceof Error ? error.message : 'Unknown database error',
-    });
-  }
+// Health check route
+app.get('/api/health', (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // 404 handler
@@ -41,5 +36,21 @@ app.use((req: Request, res: Response) => {
   });
 });
 
-// Export the application handler for Vercel
-module.exports = app;
+// Start server
+const startServer = async () => {
+  try {
+    // Connect to database
+    await connectDatabase();
+
+    // Start listening
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📊 API available at http://localhost:${PORT}/api`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
