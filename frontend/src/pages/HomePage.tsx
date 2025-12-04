@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getRestaurants } from "../api/restaurantApi";
-import { Search, ChefHat, TrendingUp } from "lucide-react";
+import { Search, ChefHat, TrendingUp, MapPin, Clock, Star, Flame, Sparkles, Filter } from "lucide-react";
 import { Restaurant } from "../types/restaurant";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,8 @@ const HomePage = () => {
   const [sortBy, setSortBy] = useState("best_match");
   const [minRating, setMinRating] = useState("");
   const [maxCost, setMaxCost] = useState("");
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     loadRestaurants();
@@ -26,7 +28,6 @@ const HomePage = () => {
   useEffect(() => {
     setPage(1);
   }, [searchTerm, activeCategory]);
-
 
   const loadRestaurants = async () => {
     try {
@@ -52,130 +53,223 @@ const HomePage = () => {
     }
   };
 
-
-
   const categories = [
-    "All",
-    "Biryani",
-    "Chinese",
-    "Pizza",
-    "North Indian",
-    "South Indian",
+    { name: "All", icon: "🍽️" },
+    { name: "Biryani", icon: "🍛" },
+    { name: "Chinese", icon: "🥡" },
+    { name: "Pizza", icon: "🍕" },
+    { name: "North Indian", icon: "🫓" },
+    { name: "South Indian", icon: "🥘" },
+    { name: "Healthy", icon: "🥗" },
   ];
 
   const filteredRestaurants = restaurants;
   const skeletons = Array.from({ length: 6 });
 
-
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white relative overflow-hidden">
       <Navbar />
 
-      {/* 🔥 Background Glow */}
+      {/* Enhanced Background Effects */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-800/20 via-black to-red-800/20"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-400/10 blur-[140px] animate-pulse rounded-full"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-red-500/10 blur-[140px] animate-pulse rounded-full delay-1000"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-900/20 via-transparent to-transparent"></div>
+        
+        {/* Animated orbs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 blur-[120px] animate-pulse rounded-full"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-red-500/10 blur-[120px] animate-pulse delay-700 rounded-full"></div>
+        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-yellow-500/5 blur-[100px] animate-pulse delay-1000 rounded-full"></div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       </div>
 
-      {/* ⭐ HERO SECTION */}
-      <section className="pt-16 pb-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          {/* Left Section */}
-          <div className="flex flex-col gap-6">
-            <h2 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent leading-tight">
-              Crave. Discover. Devour.
-            </h2>
+      {/* HERO SECTION - Enhanced */}
+      <section className="pt-24 pb-32 px-6 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 space-y-6">
+            {/* Floating badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30 backdrop-blur-sm mb-4">
+              <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse" />
+              <span className="text-sm font-medium text-orange-200">Now delivering in 30 minutes</span>
+            </div>
 
-            <p className="text-lg text-gray-300">
-              Your next favorite meal is just moments away. Explore top
-              restaurants around you.
+            <h1 className="text-6xl md:text-8xl font-black mb-6">
+              <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent drop-shadow-2xl animate-gradient">
+                Crave.
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
+                Discover. Devour.
+              </span>
+            </h1>
+
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              Your next unforgettable meal is just moments away. 
+              <span className="text-orange-400 font-semibold"> Explore, order, enjoy.</span>
             </p>
 
-            {/* Search Bar */}
-            <div className="flex items-center gap-3 bg-white/5 border border-orange-500/30 rounded-full px-6 py-3 backdrop-blur-md">
-              <Search className="w-5 h-5 text-yellow-400" />
-              <input
-                type="text"
-                placeholder="Search restaurants..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-transparent flex-1 outline-none text-white placeholder-gray-300"
-              />
+            {/* Enhanced Search Bar */}
+            <div className="max-w-3xl mx-auto mt-10">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+                <div className="relative flex items-center gap-4 bg-gray-900/90 border border-orange-500/30 rounded-full px-8 py-5 backdrop-blur-xl shadow-2xl">
+                  <Search className="w-6 h-6 text-orange-400" />
+                  <input
+                    type="text"
+                    placeholder="Search for restaurants, cuisines, or dishes..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-transparent flex-1 outline-none text-white text-lg placeholder-gray-400"
+                  />
+                  {searchTerm && (
+                    <button 
+                      onClick={() => setSearchTerm("")}
+                      className="text-gray-400 hover:text-white transition"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="flex justify-center gap-8 mt-12 flex-wrap">
+              <div className="flex items-center gap-2 text-gray-300">
+                <Flame className="w-5 h-5 text-orange-500" />
+                <span className="font-semibold">500+ Restaurants</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-300">
+                <Star className="w-5 h-5 text-yellow-500" />
+                <span className="font-semibold">4.5+ Avg Rating</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-300">
+                <Clock className="w-5 h-5 text-green-500" />
+                <span className="font-semibold">30 Min Delivery</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ⭐ CATEGORY FILTER */}
-      <section className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="flex items-center gap-2 mb-4">
-          <ChefHat className="w-6 h-6 text-yellow-400" />
-          <h3 className="text-xl font-bold">Explore Cuisines</h3>
+      {/* CATEGORY FILTER - Enhanced */}
+      <section className="max-w-7xl mx-auto px-6 pb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg">
+            <ChefHat className="w-6 h-6 text-white" />
+          </div>
+          <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+            Explore Cuisines
+          </h3>
         </div>
 
-        <div className="flex gap-3 overflow-x-auto pb-2">
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-2 rounded-full font-semibold duration-300 whitespace-nowrap
-                ${activeCategory === cat
-                  ? "bg-orange-500 text-black shadow-md shadow-orange-500/40"
-                  : "bg-white/5 text-gray-300 hover:text-white"
+              key={cat.name}
+              onClick={() => setActiveCategory(cat.name)}
+              className={`group relative px-8 py-4 rounded-2xl font-semibold duration-300 whitespace-nowrap transform hover:scale-105 transition-all
+                ${activeCategory === cat.name
+                  ? "bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-xl shadow-orange-500/50"
+                  : "bg-gray-800/50 backdrop-blur-sm text-gray-300 hover:bg-gray-800 border border-gray-700 hover:border-orange-500/50"
                 }`}
             >
-              {cat}
+              <span className="text-2xl mr-2">{cat.icon}</span>
+              {cat.name}
+              {activeCategory === cat.name && (
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 blur-xl opacity-50 -z-10"></div>
+              )}
             </button>
           ))}
         </div>
       </section>
-      {/* ⭐ FILTERS + SORT BAR */}
-      <div className="max-w-6xl mx-auto px-6 mb-6 flex flex-wrap gap-4">
 
-        {/* Sort */}
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-          className="bg-white/5 border border-gray-700 text-white px-4 py-2 rounded-md"
-        >
-          <option value="best_match">Best Match</option>
-          <option value="rating_high">Rating High → Low</option>
-          <option value="cost_low">Cost Low → High</option>
-        </select>
+      {/* FILTERS BAR - Enhanced */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <div className="bg-gray-900/50 backdrop-blur-xl border border-gray-800 rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4 md:mb-0">
+            <div className="flex items-center gap-2">
+              <Filter className="w-5 h-5 text-orange-400" />
+              <span className="font-semibold text-lg">Filters</span>
+            </div>
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="md:hidden text-orange-400 text-sm"
+            >
+              {showFilters ? "Hide" : "Show"}
+            </button>
+          </div>
 
-        {/* Min Rating */}
-        <select
-          value={minRating}
-          onChange={(e) => setMinRating(e.target.value)}
-          className="bg-white/5 border border-gray-700 text-white px-4 py-2 rounded-md"
-        >
-          <option value="">Min Rating</option>
-          <option value="3">3★+</option>
-          <option value="4">4★+</option>
-          <option value="4.5">4.5★+</option>
-        </select>
+          <div className={`${showFilters ? "flex" : "hidden md:flex"} flex-wrap gap-4 mt-4 md:mt-0`}>
+            {/* Sort */}
+            <div className="relative group flex-1 min-w-[200px]">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full bg-gray-800/80 border border-gray-700 text-white px-5 py-3 rounded-xl appearance-none cursor-pointer hover:border-orange-500/50 transition focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              >
+                <option value="best_match">🎯 Best Match</option>
+                <option value="rating_high">⭐ Rating High → Low</option>
+                <option value="cost_low">💰 Cost Low → High</option>
+              </select>
+            </div>
 
-        {/* Max Cost */}
-        <select
-          value={maxCost}
-          onChange={(e) => setMaxCost(e.target.value)}
-          className="bg-white/5 border border-gray-700 text-white px-4 py-2 rounded-md"
-        >
-          <option value="">Max Cost</option>
-          <option value="300">₹300</option>
-          <option value="600">₹600</option>
-          <option value="900">₹900</option>
-        </select>
+            {/* Min Rating */}
+            <div className="relative group flex-1 min-w-[200px]">
+              <select
+                value={minRating}
+                onChange={(e) => setMinRating(e.target.value)}
+                className="w-full bg-gray-800/80 border border-gray-700 text-white px-5 py-3 rounded-xl appearance-none cursor-pointer hover:border-orange-500/50 transition focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              >
+                <option value="">⭐ Min Rating</option>
+                <option value="3">3★ and above</option>
+                <option value="4">4★ and above</option>
+                <option value="4.5">4.5★ and above</option>
+              </select>
+            </div>
 
+            {/* Max Cost */}
+            <div className="relative group flex-1 min-w-[200px]">
+              <select
+                value={maxCost}
+                onChange={(e) => setMaxCost(e.target.value)}
+                className="w-full bg-gray-800/80 border border-gray-700 text-white px-5 py-3 rounded-xl appearance-none cursor-pointer hover:border-orange-500/50 transition focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+              >
+                <option value="">💵 Max Cost</option>
+                <option value="300">Under ₹300</option>
+                <option value="600">Under ₹600</option>
+                <option value="900">Under ₹900</option>
+              </select>
+            </div>
+
+            {/* Clear Filters */}
+            {(minRating || maxCost || sortBy !== "best_match") && (
+              <button
+                onClick={() => {
+                  setSortBy("best_match");
+                  setMinRating("");
+                  setMaxCost("");
+                }}
+                className="px-6 py-3 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-300 rounded-xl transition font-medium"
+              >
+                Clear All
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* ⭐ RESTAURANT GRID */}
-
-      <section className="max-w-6xl mx-auto px-6 pb-20">
-        <div className="flex items-center gap-2 mb-6">
-          <TrendingUp className="w-6 h-6 text-yellow-400" />
-          <h2 className="text-3xl font-extrabold">Popular Restaurants</h2>
+      {/* RESTAURANT GRID - Enhanced */}
+      <section className="max-w-7xl mx-auto px-6 pb-20">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg animate-pulse">
+            <TrendingUp className="w-6 h-6 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+            Popular Restaurants
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-orange-500/50 to-transparent ml-4"></div>
         </div>
 
         {loading ? (
@@ -183,59 +277,84 @@ const HomePage = () => {
             {skeletons.map((_, i) => (
               <div
                 key={i}
-                className="bg-white/5 h-64 rounded-xl animate-pulse"
-              ></div>
+                className="relative bg-gray-900/50 backdrop-blur-sm h-96 rounded-3xl overflow-hidden border border-gray-800"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-800/50 to-transparent animate-shimmer"></div>
+              </div>
             ))}
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredRestaurants.map((restaurant) => (
+            {filteredRestaurants.map((restaurant, idx) => (
               <div
                 key={restaurant._id}
+                onMouseEnter={() => setHoveredCard(restaurant._id)}
+                onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => navigate(`/restaurant/${restaurant._id}`)}
-                className="rounded-xl bg-white/5 border border-gray-700 backdrop-blur-md overflow-hidden hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 duration-300 cursor-pointer"
+                className="group relative rounded-3xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 overflow-hidden hover:border-orange-500/50 duration-500 cursor-pointer transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20"
+                style={{
+                  animation: `fadeInUp 0.6s ease-out ${idx * 0.1}s both`
+                }}
               >
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
                 {/* Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-56 overflow-hidden">
                   <img
                     src={restaurant.images[0]}
                     alt={restaurant.name}
-                    className="w-full h-full object-cover duration-500 hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
 
-                  <div className="absolute top-3 right-3 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                    ⭐ {restaurant.rating}
+                  {/* Overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                  {/* Rating Badge */}
+                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg">
+                    <Star className="w-4 h-4 fill-white" />
+                    {restaurant.rating}
                   </div>
 
-                  <div className="absolute bottom-3 left-3">
+                  {/* Open/Closed Badge */}
+                  <div className="absolute bottom-4 left-4 z-20">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-semibold text-white
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold text-white backdrop-blur-md shadow-lg
                       ${restaurant.is_open
-                          ? "bg-green-500/80"
-                          : "bg-red-500/80"
+                          ? "bg-green-500/90 shadow-green-500/50"
+                          : "bg-red-500/90 shadow-red-500/50"
                         }`}
                     >
-                      {restaurant.is_open ? "🟢 Open" : "🔴 Closed"}
+                      <span className={`w-2 h-2 rounded-full ${restaurant.is_open ? "bg-white animate-pulse" : "bg-white"}`}></span>
+                      {restaurant.is_open ? "Open Now" : "Closed"}
                     </span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-5">
-                  <h3 className="text-xl font-bold">{restaurant.name}</h3>
-                  <p className="text-gray-400 text-sm mt-1">
+                <div className="p-6 relative z-20">
+                  <h3 className="text-2xl font-bold mb-2 group-hover:text-orange-400 transition">
+                    {restaurant.name}
+                  </h3>
+                  
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-1">
                     {restaurant.cuisines.join(" • ")}
                   </p>
 
-                  <div className="flex justify-between items-center border-t border-gray-700 mt-4 pt-4">
-                    <span className="text-yellow-400 text-lg font-bold">
-                      ₹{restaurant.cost_for_two}
-                    </span>
-                    <span className="text-gray-400 text-sm">for two</span>
+                  {/* Info Row */}
+                  <div className="flex items-center justify-between py-4 border-t border-gray-800">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                        ₹{restaurant.cost_for_two}
+                      </span>
+                      <span className="text-gray-500 text-sm">for two</span>
+                    </div>
                   </div>
 
-                  <button className="w-full mt-4 py-2 rounded-md bg-gradient-to-r from-orange-500 to-red-600 font-semibold shadow-md shadow-orange-500/30 hover:shadow-orange-500/60 hover:-translate-y-1 duration-300">
-                    Order Now
+                  {/* CTA Button */}
+                  <button className="w-full mt-4 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 via-red-600 to-pink-600 font-bold text-white shadow-lg shadow-orange-500/30 hover:shadow-orange-500/60 transform hover:scale-[1.02] active:scale-95 transition-all duration-300 relative overflow-hidden group/btn">
+                    <span className="relative z-10">Order Now</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-orange-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
                   </button>
                 </div>
               </div>
@@ -244,49 +363,143 @@ const HomePage = () => {
         )}
 
         {!loading && filteredRestaurants.length === 0 && (
-          <p className="text-center text-gray-400 py-20">
-            No restaurants found.
-          </p>
+          <div className="text-center py-32">
+            <div className="inline-block p-6 bg-gray-900/50 rounded-3xl border border-gray-800 backdrop-blur-sm">
+              <Search className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-400 text-lg">No restaurants found</p>
+              <p className="text-gray-600 text-sm mt-2">Try adjusting your filters or search terms</p>
+            </div>
+          </div>
         )}
       </section>
 
-      {/* PAGINATION */}
-      <div className="flex justify-center items-center gap-4 mt-10">
-        <button
-          onClick={() => page > 1 && setPage(page - 1)}
-          className={`px-4 py-2 rounded-md font-semibold 
-            ${page === 1
-              ? "bg-gray-700 text-gray-400"
-              : "bg-orange-500 hover:bg-orange-600"
-            }
-          `}
-          disabled={page === 1}
-        >
-          ⬅ Previous
-        </button>
+      {/* PAGINATION - Enhanced */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-6 pb-16">
+          <button
+            onClick={() => page > 1 && setPage(page - 1)}
+            disabled={page === 1}
+            className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:scale-105
+              ${page === 1
+                ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                : "bg-gradient-to-r from-orange-500 to-red-600 text-white hover:shadow-lg hover:shadow-orange-500/50"
+              }
+            `}
+          >
+            ← Previous
+          </button>
 
-        <span className="text-white font-bold text-lg">
-          Page {page} / {totalPages}
-        </span>
+          <div className="flex items-center gap-3">
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (page <= 3) {
+                pageNum = i + 1;
+              } else if (page >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = page - 2 + i;
+              }
 
-        <button
-          onClick={() => page < totalPages && setPage(page + 1)}
-          className={`px-4 py-2 rounded-md font-semibold 
-            ${page === totalPages
-              ? "bg-gray-700 text-gray-400"
-              : "bg-orange-500 hover:bg-orange-600"
-            }
-          `}
-          disabled={page === totalPages}
-        >
-          Next ➡
-        </button>
-      </div>
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => setPage(pageNum)}
+                  className={`w-12 h-12 rounded-xl font-bold transition-all duration-300 transform hover:scale-110
+                    ${page === pageNum
+                      ? "bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-lg shadow-orange-500/50"
+                      : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                    }
+                  `}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+          </div>
 
-      {/* FOOTER */}
-      <footer className="border-t border-gray-800 py-6 text-center text-gray-500 text-sm">
-        © 2025 FoodExpress. Crafted with fire.
+          <button
+            onClick={() => page < totalPages && setPage(page + 1)}
+            disabled={page === totalPages}
+            className={`px-8 py-4 rounded-xl font-bold transition-all duration-300 transform hover:scale-105
+              ${page === totalPages
+                ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+                : "bg-gradient-to-r from-orange-500 to-red-600 text-white hover:shadow-lg hover:shadow-orange-500/50"
+              }
+            `}
+          >
+            Next →
+          </button>
+        </div>
+      )}
+
+      {/* FOOTER - Enhanced */}
+      <footer className="relative border-t border-gray-800/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Flame className="w-6 h-6 text-orange-500 animate-pulse" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+                FoodExpress
+              </span>
+            </div>
+            <p className="text-gray-500 mb-6">Crafted with fire & passion for food lovers</p>
+            <div className="flex justify-center gap-8 text-sm text-gray-600">
+              <span>© 2025 FoodExpress</span>
+            </div>
+          </div>
+        </div>
       </footer>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
+        }
+
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
