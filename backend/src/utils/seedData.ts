@@ -471,14 +471,20 @@ export const restaurantData: IRestaurant[] = [
   }
 ];
 
-export const seedDatabase = async (): Promise<void> => {
+export const seedRestaurants = async (req: any, res: any) => {
   try {
     await Restaurant.deleteMany({});
-    console.log('🗑️  Cleared existing restaurants');
-    
     await Restaurant.insertMany(restaurantData);
-    console.log(`✅ Successfully seeded ${restaurantData.length} restaurants`);
-  } catch (error) {
-    console.error('❌ Error seeding database:', error);
+
+    return res.status(200).json({
+      success: true,
+      message: `Successfully seeded ${restaurantData.length} restaurants`,
+    });
+
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
