@@ -61,7 +61,6 @@ const HomePage = () => {
     "Pizza",
     "North Indian",
     "South Indian",
-    "Healthy",
   ];
 
   const filteredRestaurants = restaurants;
