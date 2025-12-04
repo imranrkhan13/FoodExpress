@@ -5,6 +5,7 @@ import App from './App';
 import './index.css';
 import { CartProvider } from "./context/CartContext";
 import { Toaster } from "react-hot-toast";
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <CartProvider>
     <BrowserRouter>
