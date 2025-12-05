@@ -10,8 +10,8 @@ interface RestaurantCardProps {
 
 const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant, onClick }) => {
   return (
-    <div
-      onClick={onClick}
+    <<div 
+    onClick={onClick}
       className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300"
     >
       {/* Image */}
@@ -49,8 +49,10 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant, onClick }) 
         <p className="text-gray-600 text-sm truncate">
           {Array.isArray(restaurant.cuisines)
             ? restaurant.cuisines.join(', ')
-            : restaurant.cuisines || "No cuisines"}
-        </p>
+            : restaurant.cuisines 
+              ? String(restaurant.cuisines) 
+              : "No cuisines"}
+          </p>
 
         {/* Status Badge */}
         <div className="mt-3">
@@ -64,8 +66,8 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant, onClick }) 
         </div>
 
         {/* View details button */}
-        <Link
-          to={`/restaurant/${restaurant._id}`}
+       <Link
+        to={`/restaurant/${restaurant._id}`}
           className="mt-4 inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-300"
         >
           View Details
