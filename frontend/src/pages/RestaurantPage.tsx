@@ -17,18 +17,19 @@ const RestaurantPage = () => {
   }, [id]);
 
   const loadRestaurant = async () => {
-    try {
-      setLoading(true);
-      const data = await getRestaurantById(id);
-      console.log("Restaurant data:", data);
-      setRestaurant(data);
-    } catch (error) {
-      console.error("Error loading restaurant:", error);
-      setRestaurant(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const data = await getRestaurantById(id);
+    console.log("Restaurant data:", data);
+    console.log("Images array:", data.images); // CHECK THIS
+    setRestaurant(data);
+  } catch (error) {
+    console.error("Error loading restaurant:", error);
+    setRestaurant(null);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) {
     return (
@@ -99,14 +100,15 @@ const RestaurantPage = () => {
 
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
-        <img
-          src={restaurant.images?.[activeImage] || restaurant.images?.[0] || 'https://via.placeholder.com/800x450?text=Restaurant+Image'}
-          alt={restaurant.name}
-          onError={(e) => {
-            e.currentTarget.src = 'https://via.placeholder.com/800x450?text=Image+Not+Available';
-          }}
-          className="w-full h-full object-cover transition-transform duration-700"
-        />
+        // For hero image
+<img
+  src={restaurant.images?.[activeImage] || restaurant.images?.[0]}
+  alt={restaurant.name}
+  onError={(e) => {
+    e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="450"%3E%3Crect fill="%23374151" width="800" height="450"/%3E%3Ctext fill="%239CA3AF" font-family="Arial" font-size="24" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3ERestaurant Image%3C/text%3E%3C/svg%3E';
+  }}
+  className="w-full h-full object-cover transition-transform duration-700"
+/>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
         
         {/* Image Navigation Dots */}
@@ -259,14 +261,15 @@ const RestaurantPage = () => {
                         {item.image && (
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                onError={(e) => {
-                                  e.currentTarget.src = 'https://via.placeholder.com/150?text=No+Image';
-                                }}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                              />
+                              // For menu item images
+<img
+  src={item.image}
+  alt={item.name}
+  onError={(e) => {
+    e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="150"%3E%3Crect fill="%23374151" width="150" height="150"/%3E%3Ctext fill="%239CA3AF" font-family="Arial" font-size="16" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
+  }}
+  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+/>
                             </div>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
                           </div>
