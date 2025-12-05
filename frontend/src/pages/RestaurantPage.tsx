@@ -18,21 +18,16 @@ const RestaurantPage = () => {
 const loadRestaurant = async () => {
   try {
     setLoading(true);
-    const response = await getRestaurantById(id!); // returns {success, data, pagination}
-    
-    if (response.success && Array.isArray(response.data)) {
-      const found = response.data.find((r: any) => r._id === id);
-      setRestaurant(found || null);
-    } else {
-      setRestaurant(null);
-    }
+    const data = await getRestaurantById(id!); // fetches single restaurant
+    setRestaurant(data || null);
   } catch (err) {
-    console.error("Error fetching restaurant:", err);
+    console.error(err);
     setRestaurant(null);
   } finally {
     setLoading(false);
   }
 };
+
 
 
 
