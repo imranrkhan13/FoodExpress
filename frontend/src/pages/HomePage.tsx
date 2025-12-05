@@ -67,6 +67,8 @@ const HomePage = () => {
   const skeletons = Array.from({ length: 6 });
 
   return (
+      <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff6b35;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23f7931e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23grad)'/%3E%3Cpath d='M35 45 Q50 25 65 45' fill='none' stroke='white' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='40' cy='55' r='3' fill='white'/%3E%3Ccircle cx='50' cy='58' r='3' fill='white'/%3E%3Ccircle cx='60' cy='55' r='3' fill='white'/%3E%3Cpath d='M35 68 Q50 75 65 68' fill='none' stroke='white' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white relative overflow-hidden">
       <Navbar />
 
