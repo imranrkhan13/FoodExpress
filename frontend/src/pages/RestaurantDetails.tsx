@@ -4,24 +4,43 @@ import { getRestaurantById } from "../api/restaurantApi";
 import { Restaurant } from "../types/restaurant";
 import { ArrowLeft } from "lucide-react";
 
+// ... (imports and state setup)
+
 const RestaurantPage = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null); // New state for error messages
 
   useEffect(() => {
     if (id) loadRestaurant();
+    else {
+      // Handle case where ID is missing immediately
+      setError("No restaurant ID provided in the URL.");
+      setLoading(false);
+    }
   }, [id]);
 
   const loadRestaurant = async () => {
     try {
       setLoading(true);
+      setError(null); // Clear previous errors
       const res = await getRestaurantById(id);
-      setRestaurant(res.data.data);
+      
+      // *** PAY CLOSE ATTENTION HERE - CHECK YOUR API RESPONSE STRUCTURE ***
+      setRestaurant(res.data.data); 
+      
+    } catch (err) {
+      console.error("Failed to fetch restaurant:", err);
+      // Set a user-friendly error message
+      setError("Failed to load restaurant details. Please try again."); 
+      setRestaurant(null); // Ensure restaurant is null on error
     } finally {
       setLoading(false);
     }
   };
+
+  // ... (rest of the component)
 
   if (loading) {
     return (
@@ -31,7 +50,17 @@ const RestaurantPage = () => {
     );
   }
 
+  if (error) { // Display error message
+    return (
+      <div className="text-red-400 text-center py-20 text-2xl">
+        Error: {error}
+      </div>
+    );
+  }
+
   if (!restaurant) {
+    // This now primarily catches the case where the API returns success (200) but no data, 
+    // or if an error occurred but didn't prevent 'finally' from running.
     return (
       <div className="text-white text-center py-20 text-2xl">
         Restaurant not found.
@@ -39,6 +68,10 @@ const RestaurantPage = () => {
     );
   }
 
+  // ... (return statement with restaurant details)
+};
+
+export default RestaurantPage;
   return (
     <div className="min-h-screen bg-black text-white">
 
