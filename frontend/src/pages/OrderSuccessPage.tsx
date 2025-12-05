@@ -172,7 +172,8 @@ const OrderSuccessPage = () => {
             <span>Track Order (Coming soon) </span>
           </button>
         </div>
-
+       </div>  
+      </div>
 
       <style>{`
         @keyframes scaleIn {
