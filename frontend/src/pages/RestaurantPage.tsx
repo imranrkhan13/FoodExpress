@@ -98,9 +98,10 @@ const RestaurantPage = () => {
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
        <img
-  src={restaurant?.images?.[0] || "https://placehold.co/300x200?text=No+Image"}
-  alt={restaurant?.name}
-/>
+    src={restaurant.images[0]}
+    alt={restaurant.name}
+    style={{ width: "100%", height: "200px", objectFit: "cover" }}
+  />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
 
         {/* Image Navigation Dots */}
