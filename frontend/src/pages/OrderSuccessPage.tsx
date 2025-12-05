@@ -169,18 +169,18 @@ const OrderSuccessPage = () => {
 
           <button className="flex-1 py-4 px-6 bg-gray-800/80 backdrop-blur-sm border border-gray-700 hover:border-green-500/50 rounded-xl text-white font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center justify-center gap-2 group">
             <Package className="w-5 h-5 group-hover:text-green-400 transition" />
-            <span>Track Order</span>
+            <span>Track Order (Coming soon) </span>
           </button>
         </div>
 
         {/* Additional Info */}
-        <div className="mt-12 text-center">
+        {/* <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm mb-2">Need help with your order?</p>
           <button className="text-orange-400 hover:text-orange-300 font-semibold text-sm transition">
             Contact Support →
           </button>
         </div>
-      </div>
+      </div> */}
 
       <style>{`
         @keyframes scaleIn {
