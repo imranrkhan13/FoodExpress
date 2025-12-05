@@ -16,8 +16,8 @@ const RestaurantPage = () => {
   const loadRestaurant = async () => {
     try {
       setLoading(true);
-      const res = await getRestaurantById(id!);
-      setRestaurant(res.data);
+      const res = await getRestaurantById(id);
+      setRestaurant(res.data.data);
     } finally {
       setLoading(false);
     }
