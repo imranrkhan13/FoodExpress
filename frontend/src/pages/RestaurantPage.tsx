@@ -103,21 +103,22 @@ const RestaurantPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
 
         {/* Image Navigation Dots */}
-        {restaurant.images.length > 1 && (
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-            {restaurant.images.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveImage(idx)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  activeImage === idx 
-                    ? "bg-orange-500 w-8" 
-                    : "bg-white/30 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
-        )}
+      {restaurant.images?.length > 1 && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+          {restaurant.images?.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveImage(idx)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                activeImage === idx 
+                  ? "bg-orange-500 w-8" 
+                  : "bg-white/30 hover:bg-white/50"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
 
         {/* Status Badge */}
         <div className="absolute top-6 right-6">
