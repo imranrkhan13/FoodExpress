@@ -265,7 +265,6 @@ const RestaurantPage = () => {
                         {item.image && (
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
-                              // For menu item images
 <img
   src={item.image}
   alt={item.name}
