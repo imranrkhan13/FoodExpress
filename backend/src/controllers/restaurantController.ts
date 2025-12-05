@@ -139,23 +139,23 @@ export const getRestaurantById = async (req: Request, res: Response): Promise<vo
 /**
  * Seed database with sample data
  */
-export const seedRestaurants = async (req: Request, res: Response): Promise<void> => {
-  try {
-    await seedDatabase();
+// export const seedRestaurants = async (req: Request, res: Response): Promise<void> => {
+//   try {
+//     await seedDatabase();
 
-    res.status(200).json({
-      success: true,
-      message: 'Database seeded successfully',
-    });
-  } catch (error) {
-    console.error('Error seeding database:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error seeding database',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: 'Database seeded successfully',
+//     });
+//   } catch (error) {
+//     console.error('Error seeding database:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error seeding database',
+//       error: error instanceof Error ? error.message : 'Unknown error',
+//     });
+//   }
+// };
 
 /**
  * Get all unique cuisines for filter options
