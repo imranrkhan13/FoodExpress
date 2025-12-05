@@ -237,10 +237,6 @@ const RestaurantPage = () => {
               <div key={i} className="mb-10">
                 <h3 className="text-2xl font-bold mb-6 text-gray-200">{cat.category}</h3>
 
-               {restaurant.menu.map((cat, i) => (
-              <div key={i} className="mb-10">
-                <h3 className="text-2xl font-bold mb-6 text-gray-200">{cat.category}</h3>
-
                 <div className="space-y-4">
                   {cat.items.map((item, j) => (
                     <div 
