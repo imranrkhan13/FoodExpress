@@ -17,8 +17,8 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant, onClick }) 
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <img
-          src={restaurant.images[0]}
-          alt={restaurant.name}
+          src={restaurant.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
+          alt={restaurant.name || "Restaurant"}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
         {!restaurant.is_open && (
@@ -36,27 +36,33 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant, onClick }) 
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center space-x-1">
             <span className="text-yellow-500">⭐</span>
-            <span className="font-semibold text-gray-700">{restaurant.rating.toFixed(1)}</span>
+            <span className="font-semibold text-gray-700">
+              {restaurant.rating?.toFixed(1) || "0.0"}
+            </span>
           </div>
-          <span className="text-gray-600 font-medium">₹{restaurant.cost_for_two} for two</span>
+          <span className="text-gray-600 font-medium">
+            ₹{restaurant.cost_for_two || "N/A"} for two
+          </span>
         </div>
 
         {/* Cuisines */}
         <p className="text-gray-600 text-sm truncate">
-          {restaurant.cuisines.join(', ')}
+          {Array.isArray(restaurant.cuisines)
+            ? restaurant.cuisines.join(', ')
+            : restaurant.cuisines || "No cuisines"}
         </p>
 
         {/* Status Badge */}
         <div className="mt-3">
           <span
-            className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${restaurant.is_open
-                ? 'bg-green-100 text-green-800'
-                : 'bg-red-100 text-red-800'
-              }`}
+            className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+              restaurant.is_open ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            }`}
           >
             {restaurant.is_open ? 'Open Now' : 'Closed'}
           </span>
         </div>
+
         {/* View details button */}
         <Link
           to={`/restaurant/${restaurant._id}`}
@@ -64,11 +70,10 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant, onClick }) 
         >
           View Details
         </Link>
-
       </div>
     </div>
   );
-
 };
+
 
 export default RestaurantCard;
