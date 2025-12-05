@@ -212,17 +212,18 @@ const RestaurantPage = () => {
             <div className="text-center p-4 bg-gray-800/30 rounded-xl border border-gray-700">
               <ChefHat className="w-8 h-8 text-red-400 mx-auto mb-2" />
               <p className="text-sm text-gray-400">Cuisines</p>
-              <p className="font-bold">Array.isArray(restaurant.cuisines)
-              ? restaurant.cuisines.join(" • ")
-              : "No cuisines"
-            +</p>
+             <p className="font-bold">
+              {Array.isArray(restaurant.cuisines)
+                ? restaurant.cuisines.join(" • ")
+                : "No cuisines"}
+            </p>
             </div>
           </div>
         </div>
 
         {/* MENU SECTION */}
-        {restaurant.images?.[0] || "fallback"}> 0 && (
-          <div className="mt-8">
+       {(restaurant.images?.length || 0) > 0 && (
+        <div className="mt-8">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg">
                 <ChefHat className="w-6 h-6 text-white" />
