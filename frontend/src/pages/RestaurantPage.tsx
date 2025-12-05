@@ -19,12 +19,20 @@ const RestaurantPage = () => {
   const loadRestaurant = async () => {
     try {
       setLoading(true);
-      const data = await getRestaurantById(id!);
-      setRestaurant(data.data[0]);
+      const response = await getRestaurantById(id!); // the API response
+  
+      if (response.success && response.data.length > 0) {
+        // Assuming you want the first restaurant from the array
+        setRestaurant(response.data[0]);
+      } else {
+        setRestaurant(null); // No restaurant found
+      }
+  
     } finally {
       setLoading(false);
     }
   };
+
 
   if (loading) {
     return (
