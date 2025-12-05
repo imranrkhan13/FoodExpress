@@ -15,23 +15,23 @@ const RestaurantPage = () => {
   useEffect(() => {
     if (id) loadRestaurant();
   }, [id]);
+const loadRestaurant = async () => {
+  try {
+    setLoading(true);
+    const response = await getRestaurantById(id!); // returns { success, data, pagination }
 
-  const loadRestaurant = async () => {
-    try {
-      setLoading(true);
-      const response = await getRestaurantById(id!); // the API response
-  
-      if (response.success && response.data.length > 0) {
-        // Assuming you want the first restaurant from the array
-        setRestaurant(response.data[0]);
-      } else {
-        setRestaurant(null); // No restaurant found
-      }
-  
-    } finally {
-      setLoading(false);
+    if (response.success) {
+      const found = response.data.find((r: any) => r._id === id);
+      setRestaurant(found || null); // null triggers “not found” message
+    } else {
+      setRestaurant(null);
     }
-  };
+
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 
   if (loading) {
