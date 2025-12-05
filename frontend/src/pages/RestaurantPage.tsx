@@ -105,7 +105,6 @@ const RestaurantPage = () => {
 
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
-        // For hero image
 <img
   src={restaurant.images?.[activeImage] || restaurant.images?.[0]}
   alt={restaurant.name}
