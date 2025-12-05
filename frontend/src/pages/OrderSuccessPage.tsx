@@ -169,10 +169,10 @@ const OrderSuccessPage = () => {
 
           <button className="flex-1 py-4 px-6 bg-gray-800/80 backdrop-blur-sm border border-gray-700 hover:border-green-500/50 rounded-xl text-white font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center justify-center gap-2 group">
             <Package className="w-5 h-5 group-hover:text-green-400 transition" />
-            <span>Track Order (Coming soon) </span>
+            <span>Track Order</span>
           </button>
         </div>
-       </div>  
+
       </div>
 
       <style>{`
