@@ -222,8 +222,8 @@ const RestaurantPage = () => {
         </div>
 
         {/* MENU SECTION */}
-       {(restaurant.images?.length || 0) > 0 && (
-        <div className="mt-8">
+        {restaurant.menu && restaurant.menu.length > 0 && (
+          <div className="mt-8">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg">
                 <ChefHat className="w-6 h-6 text-white" />
@@ -234,6 +234,10 @@ const RestaurantPage = () => {
             </div>
 
             {restaurant.menu.map((cat, i) => (
+              <div key={i} className="mb-10">
+                <h3 className="text-2xl font-bold mb-6 text-gray-200">{cat.category}</h3>
+
+               {restaurant.menu.map((cat, i) => (
               <div key={i} className="mb-10">
                 <h3 className="text-2xl font-bold mb-6 text-gray-200">{cat.category}</h3>
 
