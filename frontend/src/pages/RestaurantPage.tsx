@@ -98,10 +98,13 @@ const RestaurantPage = () => {
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
          <img
-                    src={restaurant.images[0]}
-                    alt={restaurant.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+  src={item.image}
+  alt={item.name}
+  onError={(e) => {
+    e.currentTarget.src = 'https://via.placeholder.com/150?text=No+Image';
+  }}
+  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+/>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
         {/* Image Navigation Dots */}
         {restaurant?.images?.length > 1 && (
@@ -255,11 +258,14 @@ const RestaurantPage = () => {
                         {item.image && (
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
-                            <img
-                              src={restaurant.images[0]}
-                              alt={restaurant.name}
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
+                           <img
+  src={item.image}
+  alt={item.name}
+  onError={(e) => {
+    e.currentTarget.src = 'https://via.placeholder.com/150?text=No+Image';
+  }}
+  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+/>
                             </div>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
                           </div>
