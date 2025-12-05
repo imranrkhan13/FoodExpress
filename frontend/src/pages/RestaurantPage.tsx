@@ -97,13 +97,8 @@ const RestaurantPage = () => {
 
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
-       <img
-    src={restaurant?.images[0]}
-    alt={restaurant?.name}
-    style={{ width: "100%", height: "200px", objectFit: "cover" }}
-  />
+       <img src={restaurant.images?.[0]} alt={restaurant.name} />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-
         {/* Image Navigation Dots */}
         {restaurant?.images?.length > 1 && (
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
@@ -256,10 +251,7 @@ const RestaurantPage = () => {
                         {item.image && (
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
-                             <img
-  src={restaurant?.images?.[0] || "https://placehold.co/300x200?text=No+Image"}
-  alt={restaurant?.name}
-/>
+                             <img src={restaurant.images?.[0]} alt={restaurant.name} />
                             </div>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
                           </div>
