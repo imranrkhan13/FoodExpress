@@ -248,17 +248,17 @@ const RestaurantPage = () => {
                       <div className="flex gap-6 items-start">
                         {/* Item Image */}
                         {item.image && (
-                          <div className="relative flex-shrink-0">
-                            <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
-                              <img
-                                src={item.image || "https://via.placeholder.com/300x200?text=No+Image"}
-                                alt={item.name}
-                                className="w-full h-full object-cover"
-                              />
+                            <div className="relative flex-shrink-0">
+                              <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
+                                <img
+                                  src={restaurant.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
+                                  alt={restaurant.name}
+                                  className="w-full h-40 object-cover rounded-t-lg"
+                                />
+                              </div>
+                              <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
                             </div>
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
-                          </div>
-                        )}
+                          )}
 
                         {/* Item Details */}
                         <div className="flex-1 min-w-0">
