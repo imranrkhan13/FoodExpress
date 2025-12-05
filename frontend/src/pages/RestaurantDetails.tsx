@@ -94,9 +94,10 @@ className="w-full h-full object-cover"
       <div className="max-w-4xl mx-auto -mt-20 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
         <h1 className="text-4xl font-extrabold mb-2">{restaurant.name}</h1>
 
-        <p className="text-gray-300 text-lg mb-4">
-          {restaurant.cuisines.join(" • ")}
-        </p>
+       <p className="text-gray-300 text-lg mb-4">
+  {/* FIX HERE: Use (restaurant.cuisines || []) to ensure it's an array */}
+  {(restaurant.cuisines || []).join(" • ")}
+</p>
 
         <div className="flex flex-col gap-3 text-lg text-gray-200">
           <p>⭐ <span className="font-bold">{restaurant.rating}</span></p>
