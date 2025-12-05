@@ -17,7 +17,7 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("best_match");
   const [minRating, setMinRating] = useState("");
-  const [maxCost, setMaxCost] = useState("");
+  const [maxCost, setMaxCost] = useState(2000);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
 
