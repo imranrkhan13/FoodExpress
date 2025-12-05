@@ -98,15 +98,15 @@ const RestaurantPage = () => {
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
         <img
-          src={restaurant.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
-          alt={restaurant.name}
+          src={restaurant?.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
+          alt={restaurant?.name}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
 
         {/* Image Navigation Dots */}
-        {restaurant.images.length > 1 && (
+        {restaurant?.images?.length > 1 && (
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-            {restaurant.images.map((_, idx) => (
+            {restaurant?.images?.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveImage(idx)}
@@ -146,12 +146,12 @@ const RestaurantPage = () => {
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex-1">
                 <h1 className="text-4xl md:text-5xl font-black mb-3 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">
-                  {restaurant.name}
+                  {restaurant?.name}
                 </h1>
                 <div className="flex items-center gap-2 text-gray-300 text-lg mb-4">
                   <ChefHat className="w-5 h-5 text-orange-400" />
                   <p className="text-gray-300 text-lg mb-4">
-                    {(restaurant.cuisines || []).join(" • ")} 
+                    {(restaurant?.cuisines || []).join(" • ")} 
                 </p>
                 </div>
               </div>
@@ -159,7 +159,7 @@ const RestaurantPage = () => {
               {/* Rating Badge */}
               <div className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-lg shadow-green-500/30">
                 <Star className="w-6 h-6 fill-white text-white" />
-                <span className="text-2xl font-bold text-white">{restaurant.rating}</span>
+                <span className="text-2xl font-bold text-white">{restaurant?.rating}</span>
               </div>
             </div>
 
@@ -176,7 +176,7 @@ const RestaurantPage = () => {
               <div>
                 <p className="text-sm text-gray-400">Cost for two</p>
                 <p className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                  ₹{restaurant.cost_for_two}
+                  ₹{restaurant?.cost_for_two}
                 </p>
               </div>
             </div>
@@ -189,7 +189,7 @@ const RestaurantPage = () => {
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-gray-400 mb-1">Location</p>
                 <p className="text-base font-semibold text-gray-200 line-clamp-2">
-                  {restaurant.address}
+                  {restaurant?.address}
                 </p>
               </div>
             </div>
@@ -219,14 +219,14 @@ const RestaurantPage = () => {
               <ChefHat className="w-8 h-8 text-red-400 mx-auto mb-2" />
               <p className="text-sm text-gray-400">Cuisines</p>
               <p className="text-gray-300 text-lg mb-4">
-  {(restaurant.cuisines || []).join(" • ")} 
+  {(restaurant?.cuisines || []).join(" • ")} 
 </p>
             </div>
           </div>
         </div>
 
         {/* MENU SECTION */}
-        {restaurant.menu && restaurant.menu.length > 0 && (
+        {restaurant?.menu && restaurant?.menu?.length > 0 && (
           <div className="mt-8">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg">
@@ -237,7 +237,7 @@ const RestaurantPage = () => {
               </h2>
             </div>
 
-            {restaurant.menu.map((cat, i) => (
+            {restaurant?.menu?.map((cat, i) => (
               <div key={i} className="mb-10">
                 <h3 className="text-2xl font-bold mb-6 text-gray-200">{cat.category}</h3>
 
@@ -256,8 +256,8 @@ const RestaurantPage = () => {
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
                              <img
-                                src={restaurant.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
-                                alt={restaurant.name}
+                                src={restaurant?.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
+                                alt={restaurant?.name}
                               />
                             </div>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
