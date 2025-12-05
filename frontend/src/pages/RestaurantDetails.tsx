@@ -51,10 +51,10 @@ const RestaurantPage = () => {
 
       <div className="w-full h-[350px] relative">
         <img
-          src={restaurant.images[0]}
-          alt={restaurant.name}
-          className="w-full h-full object-cover"
-        />
+src={restaurant.images?.[0] || "https://via.placeholder.com/600x400?text=No+Image"}
+alt={restaurant.name}
+className="w-full h-full object-cover"
+/>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
       </div>
 
