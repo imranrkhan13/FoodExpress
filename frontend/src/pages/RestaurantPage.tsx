@@ -15,18 +15,15 @@ const RestaurantPage = () => {
   useEffect(() => {
     if (id) loadRestaurant();
   }, [id]);
-const loadRestaurant = async () => {
-  try {
-    setLoading(true);
-    const data = await getRestaurantById(id!); // fetches single restaurant
-    setRestaurant(data || null);
-  } catch (err) {
-    console.error(err);
-    setRestaurant(null);
-  } finally {
-    setLoading(false);
-  }
-};
+ const loadRestaurant = async () => {
+    try {
+      setLoading(true);
+      const data = await getRestaurantById(id);
+      setRestaurant(data);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
 
