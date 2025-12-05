@@ -16,13 +16,18 @@ const RestaurantPage = () => {
     if (id) loadRestaurant();
   }, [id]);
 
-  const loadRestaurant = async () => {
+ const loadRestaurant = async () => {
   try {
     setLoading(true);
-    const data = await getRestaurantById(id);
-    console.log("Restaurant data:", data);
-    console.log("Images array:", data.images); // CHECK THIS
-    setRestaurant(data);
+    const response = await getRestaurantById(id);
+    console.log("Full API response:", response);
+    
+    // FIX: Extract the actual restaurant data
+    const restaurantData = response.data || response;
+    console.log("Restaurant data:", restaurantData);
+    console.log("Images array:", restaurantData.images);
+    
+    setRestaurant(restaurantData);
   } catch (error) {
     console.error("Error loading restaurant:", error);
     setRestaurant(null);
