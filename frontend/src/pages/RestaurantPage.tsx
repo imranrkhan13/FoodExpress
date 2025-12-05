@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getRestaurants } from '../api/restaurantApi';
-import FilterPanel from './FilterPanel';
+import FilterPanel from './components/FilterPanel';
 import RestaurantList from './RestaurantList';
 import { Restaurant } from '../types/restaurant';
 
