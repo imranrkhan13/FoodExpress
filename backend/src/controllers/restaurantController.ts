@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
 import Restaurant from '../models/Restaurant';
 import { RestaurantQueryParams } from '../types/restaurant';
-import { seedDatabase } from '../utils/seedData';
 
-/**
- * Get all restaurants with filters, search, sorting, and pagination
- */
+
 
 export const getRestaurants = async (req: Request, res: Response): Promise<void> => {
   try {
