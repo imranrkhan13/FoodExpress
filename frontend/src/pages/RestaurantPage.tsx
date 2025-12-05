@@ -8,25 +8,27 @@ import { useCart } from "../context/CartContext";
 const RestaurantPage = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
-  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [restaurant, setRestaurant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     if (id) loadRestaurant();
   }, [id]);
- const loadRestaurant = async () => {
+
+  const loadRestaurant = async () => {
     try {
       setLoading(true);
       const data = await getRestaurantById(id);
+      console.log("Restaurant data:", data);
       setRestaurant(data);
+    } catch (error) {
+      console.error("Error loading restaurant:", error);
+      setRestaurant(null);
     } finally {
       setLoading(false);
     }
   };
-
-
-
 
   if (loading) {
     return (
@@ -97,19 +99,20 @@ const RestaurantPage = () => {
 
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
-         <img
-  src={item.image}
-  alt={item.name}
-  onError={(e) => {
-    e.currentTarget.src = 'https://via.placeholder.com/150?text=No+Image';
-  }}
-  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-/>
+        <img
+          src={restaurant.images?.[activeImage] || restaurant.images?.[0] || 'https://via.placeholder.com/800x450?text=Restaurant+Image'}
+          alt={restaurant.name}
+          onError={(e) => {
+            e.currentTarget.src = 'https://via.placeholder.com/800x450?text=Image+Not+Available';
+          }}
+          className="w-full h-full object-cover transition-transform duration-700"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+        
         {/* Image Navigation Dots */}
         {restaurant?.images?.length > 1 && (
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-            {restaurant?.images?.map((_, idx) => (
+            {restaurant.images.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveImage(idx)}
@@ -153,9 +156,9 @@ const RestaurantPage = () => {
                 </h1>
                 <div className="flex items-center gap-2 text-gray-300 text-lg mb-4">
                   <ChefHat className="w-5 h-5 text-orange-400" />
-                  <p className="text-gray-300 text-lg mb-4">
+                  <p className="text-gray-300 text-lg">
                     {(restaurant?.cuisines || []).join(" • ")} 
-                </p>
+                  </p>
                 </div>
               </div>
 
@@ -221,9 +224,7 @@ const RestaurantPage = () => {
             <div className="text-center p-4 bg-gray-800/30 rounded-xl border border-gray-700">
               <ChefHat className="w-8 h-8 text-red-400 mx-auto mb-2" />
               <p className="text-sm text-gray-400">Cuisines</p>
-              <p className="text-gray-300 text-lg mb-4">
-  {(restaurant?.cuisines || []).join(" • ")} 
-</p>
+              <p className="font-bold">{restaurant?.cuisines?.length || 0}+</p>
             </div>
           </div>
         </div>
@@ -258,14 +259,14 @@ const RestaurantPage = () => {
                         {item.image && (
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
-                           <img
-  src={item.image}
-  alt={item.name}
-  onError={(e) => {
-    e.currentTarget.src = 'https://via.placeholder.com/150?text=No+Image';
-  }}
-  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-/>
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                onError={(e) => {
+                                  e.currentTarget.src = 'https://via.placeholder.com/150?text=No+Image';
+                                }}
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                              />
                             </div>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
                           </div>
@@ -287,21 +288,30 @@ const RestaurantPage = () => {
                         {/* Add Button */}
                         <button
                           onClick={() => {
-                            addToCart(item);
-                            const el = document.getElementById("bubble-" + item.name);
-                            if (el) {
-                              el.style.display = "flex";
-                              setTimeout(() => {
-                                el.style.opacity = "1";
-                                el.style.transform = "scale(1)";
-                              }, 10);
-                              setTimeout(() => {
-                                el.style.opacity = "0";
-                                el.style.transform = "scale(0.8)";
-                              }, 1500);
-                              setTimeout(() => {
-                                el.style.display = "none";
-                              }, 1800);
+                            try {
+                              const cartItem = {
+                                ...item,
+                                restaurantId: restaurant._id,
+                                restaurantName: restaurant.name
+                              };
+                              addToCart(cartItem);
+                              const el = document.getElementById("bubble-" + item.name);
+                              if (el) {
+                                el.style.display = "flex";
+                                setTimeout(() => {
+                                  el.style.opacity = "1";
+                                  el.style.transform = "scale(1)";
+                                }, 10);
+                                setTimeout(() => {
+                                  el.style.opacity = "0";
+                                  el.style.transform = "scale(0.8)";
+                                }, 1500);
+                                setTimeout(() => {
+                                  el.style.display = "none";
+                                }, 1800);
+                              }
+                            } catch (error) {
+                              console.error("Error adding to cart:", error);
                             }
                           }}
                           className="relative flex-shrink-0 bg-gradient-to-r from-orange-500 via-red-600 to-pink-600 
