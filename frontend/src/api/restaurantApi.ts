@@ -10,12 +10,12 @@ export const getRestaurants = async (page: number, limit: number, filters: any) 
     console.error("Error fetching restaurants:", error);
     throw error;
   }
-};
+
 
   const res = await axios.get(`${API_BASE_URL}/restaurants`, { params });
   return res.data;
 
-
+};
 
 export const getRestaurantById = async (id: string) => {
   try {
