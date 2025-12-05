@@ -96,8 +96,8 @@ className="w-full h-full object-cover"
 
        <p className="text-gray-300 text-lg mb-4">
   {/* FIX HERE: Use (restaurant.cuisines || []) to ensure it's an array */}
-  {(restaurant.cuisines || []).join(" • ")}
-</p>
+{ (restaurant.cuisines || []).join(" • ") }
+       </p>
 
         <div className="flex flex-col gap-3 text-lg text-gray-200">
           <p>⭐ <span className="font-bold">{restaurant.rating}</span></p>
