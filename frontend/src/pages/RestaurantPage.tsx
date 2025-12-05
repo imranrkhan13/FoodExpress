@@ -96,10 +96,10 @@ const RestaurantPage = () => {
       {/* Hero Image Section */}
       <div className="relative w-full h-[450px] overflow-hidden">
         <img
-          src={restaurant.images[activeImage]}
-          alt={restaurant.name}
-          className="w-full h-full object-cover"
-        />
+src={restaurant.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
+alt={restaurant.name}
+className="w-full h-40 object-cover rounded-t-lg"
+/>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
 
         {/* Image Navigation Dots */}
@@ -251,16 +251,10 @@ const RestaurantPage = () => {
                           <div className="relative flex-shrink-0">
                             <div className="w-32 h-32 rounded-xl overflow-hidden bg-gray-800">
                               <img
-src={restaurant.images?.[0] || "[https://via.placeholder.com/300x200?text=No+Image"}](https://via.placeholder.com/300x200?text=No+Image%22})
+src={restaurant.images?.[0] || "https://via.placeholder.com/300x200?text=No+Image"}
 alt={restaurant.name}
 className="w-full h-40 object-cover rounded-t-lg"
 />
-
-<p className="text-gray-600 text-sm mt-2">
-  {Array.isArray(restaurant.cuisines)
-    ? restaurant.cuisines.join(" • ")
-    : restaurant.cuisines || "No cuisines"}
-</p>
 
                             </div>
                             <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 to-transparent"></div>
