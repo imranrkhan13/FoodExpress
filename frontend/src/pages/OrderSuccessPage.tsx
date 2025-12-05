@@ -173,14 +173,6 @@ const OrderSuccessPage = () => {
           </button>
         </div>
 
-        {/* Additional Info */}
-        {/* <div className="mt-12 text-center">
-          <p className="text-gray-500 text-sm mb-2">Need help with your order?</p>
-          <button className="text-orange-400 hover:text-orange-300 font-semibold text-sm transition">
-            Contact Support →
-          </button>
-        </div>
-      </div> */}
 
       <style>{`
         @keyframes scaleIn {
