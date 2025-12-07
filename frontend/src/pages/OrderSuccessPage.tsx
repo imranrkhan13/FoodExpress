@@ -7,16 +7,16 @@ const OrderSuccessPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white relative overflow-hidden">
-      
+
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-900/30 via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent"></div>
-        
+
         {/* Animated orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 blur-[120px] animate-pulse rounded-full"></div>
         <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-orange-500/15 blur-[120px] animate-pulse delay-700 rounded-full"></div>
-        
+
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       </div>
@@ -40,19 +40,19 @@ const OrderSuccessPage = () => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-16">
-        
+
         {/* Success Icon with animation */}
         <div className="relative mb-8">
           {/* Glowing ring effect */}
           <div className="absolute inset-0 -z-10">
             <div className="w-32 h-32 rounded-full bg-green-500/30 blur-2xl animate-pulse"></div>
           </div>
-          
+
           {/* Success checkmark */}
           <div className="relative bg-gradient-to-br from-green-500 to-emerald-600 p-6 rounded-full shadow-2xl shadow-green-500/50 animate-scaleIn">
             <CheckCircle className="w-20 h-20 text-white" strokeWidth={3} />
           </div>
-          
+
           {/* Sparkles */}
           <Sparkles className="absolute -top-2 -right-2 w-8 h-8 text-yellow-400 animate-spin-slow" />
           <Sparkles className="absolute -bottom-2 -left-2 w-6 h-6 text-green-400 animate-bounce" />
@@ -72,7 +72,7 @@ const OrderSuccessPage = () => {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-300 max-w-xl">
-            Thank you{name ? `, ${name}` : ""}! 
+            Thank you{name ? `, ${name}` : ""}!
             <span className="text-green-400 font-semibold"> Your delicious meal is being prepared with love 🍽️</span>
           </p>
         </div>
@@ -82,7 +82,7 @@ const OrderSuccessPage = () => {
           <div className="relative group">
             {/* Glow effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
-            
+
             <div className="relative bg-gray-900/80 backdrop-blur-xl border border-green-500/30 rounded-3xl p-8 shadow-2xl">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg">
@@ -169,10 +169,17 @@ const OrderSuccessPage = () => {
 
           <button className="flex-1 py-4 px-6 bg-gray-800/80 backdrop-blur-sm border border-gray-700 hover:border-green-500/50 rounded-xl text-white font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center justify-center gap-2 group">
             <Package className="w-5 h-5 group-hover:text-green-400 transition" />
-            <span>Track Order (Coming Soon) </span>
+            <span>Track Order</span>
           </button>
         </div>
 
+        {/* Additional Info */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-500 text-sm mb-2">Need help with your order?</p>
+          <button className="text-orange-400 hover:text-orange-300 font-semibold text-sm transition">
+            Contact Support →
+          </button>
+        </div>
       </div>
 
       <style>{`
